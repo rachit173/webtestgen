@@ -1,0 +1,74 @@
+{%extends 'base.html'%}
+{%block navbarlink%}
+<!-- Dropdown Trigger -->
+<a class='dropdown-button btn green' href='#' data-activates='dropdown1'>Questions</a>
+  <!-- Dropdown Structure -->
+  <ul id='dropdown1' class=' dropdown-content'>
+    <li>Mathematics</li>
+    {%for que in ma%}
+    <li><a href="/dashboard/question/MA/{{testcode}}/{{forloop.counter}}/{{que.pk}}/">question {{forloop.counter}}</a></li>
+    {%endfor%}
+    <li class="divider"></li>
+    <li>Physics</li>
+    {%for que in ph%}
+    <li><a href="/dashboard/question/PH/{{testcode}}/{{forloop.counter}}/{{que.pk}}/">question {{forloop.counter}}</a></li>
+    {%endfor%}
+    <li class="divider"></li>
+    <li>Chemistry</li>
+    {%for que in ch%}
+    <li><a href="/dashboard/question/CH/{{testcode}}/{{forloop.counter}}/{{que.pk}}/">question {{forloop.counter}}</a></li>
+    {%endfor%}
+    <li class="divider"></li>
+    <li><a href="/submit/">submit</a></li>
+    <li><a href="/logout/">logout</a></li>
+  </ul>
+{%endblock%}
+{%block body%}
+  {%if questionSelected%}
+  <h3>
+    <h3>Test Code: {{testcode}}</h3><br>
+    <h5>Subject {{mcq.subject}}</h2><br>
+    <h5>Question {{question_number}}</h2><br>
+      <div class="container" style="padding: 20px;">
+        <p>{{mcq.question_text}}</p>
+        <form role="form" name="quizform" action="/dashboard/save/question/{{mcq.subject}}/{{testcode}}/{{question_number}}/{{mcq.pk}}/" method="post">
+          <div class="radio">
+            <label>
+              <input id="1" name="quiz" value="1" type="radio">
+              {{mcq.optionA}}
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input id="2" name="quiz" value="2" type="radio">
+              {{mcq.optionB}}
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input id="3" name="quiz" value="3" type="radio">
+              {{mcq.optionC}}
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input id="4" name="quiz" value="4" type="radio">
+              {{mcq.optionD}}
+            </label>
+          </div>
+          <input class="btn btn-green" value=" Save " type="submit">
+        </form>
+      </div>
+    
+    <!-- {%if mcq.image%}
+    <img src='/media/{{question.image}}'>
+    {%endif%} -->
+    
+  </h3>
+  {%else%}
+  <div class="container" style="padding:10px;">
+  <h3>Test Code: {{testcode}}</h3><br>
+  <h4>Choose a question from drop down list Questions to get started</h4>
+  </div>
+  {%endif%}
+{%endblock%}
